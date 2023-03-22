@@ -25,4 +25,33 @@ public class Scenario {
         // parse scenarioDescription and save the result to the class attributes
         // not implemented
     }
+
+    private double euclidean(List<Float> x, List<Float> y) {
+        double x_calc = 0;
+        for (float i: x) {
+            x_calc += Math.pow(i, 2);
+        }
+        x_calc = Math.sqrt(x_calc);
+
+        double y_calc = 0;
+        for (float i: y) {
+            y_calc += Math.pow(i, 2);
+        }
+        y_calc = Math.sqrt(y_calc);
+
+        return Math.abs(x_calc - y_calc);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        Scenario scenario = (Scenario) obj;
+
+        return roadType.equals(scenario.roadType) &&
+                weatherCondition.equals(scenario.weatherCondition) &&
+                euclidean(initEgoCarPos, scenario.initEgoCarPos) <= 0.05 &&
+                euclidean(initCarInFrontPos, scenario.initCarInFrontPos) <= 0.05;
+    }
 }
